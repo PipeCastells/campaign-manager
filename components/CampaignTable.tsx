@@ -52,11 +52,11 @@ const CampaignTable = () => {
         </TableHead>
     }
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-8">
 
-            <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Campaigns</h1>
-                <Button className="cursor-pointer" onClick={() => setOpen(true)}>+ New Campaign</Button>
+            <div className="flex justify-between items-center pb-4 mb-2">
+                <h1 className="text-2xl font-bold text-slate-900 open-sans tracking-tight">Campaign Manager</h1>
+                <Button className="cursor-pointer shadow-sm hover:shadow border border-slate-900 bg-transparent text-slate-900 hover:bg-slate-900 hover:text-background" onClick={() => setOpen(true)}>+ New Campaign</Button>
             </div>
 
             <Table>
@@ -116,34 +116,34 @@ const CampaignTable = () => {
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Add Campaign</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold text-slate-900 open-sans tracking-tight">Add Campaign</DialogTitle>
 
-                    <form onSubmit={handleSubmit}>
-                        <div>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 py-8">
+                        <div className="flex flex-col gap-2">
                             <Label>Name</Label>
                             <Input required name="name" type="text" />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-2">
                             <Label>Start Date</Label>
                             <Input required name="startDate" type="date" />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-2">
                             <Label>End Date</Label>
                             <Input required name="endDate" type="date" />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-2">
                             <Label>Clicks</Label>
                             <Input required name="clicks" type="number" />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-2">
                             <Label>Cost</Label>
                             <Input required name="cost" type="number" />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-2">
                             <Label>Revenue</Label>
                             <Input required name="revenue" type="number" />
                         </div>
-                        <Button type="submit">Add Campaign</Button>
+                        <Button type="submit" className="bg-transparent border border-slate-900 cursor-pointer text-slate-900 hover:bg-slate-900 hover:text-background">Add Campaign</Button>
                     </form>
 
                     </DialogHeader>

@@ -23,6 +23,8 @@ const CampaignTable = () => {
     };
 
 
+
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
@@ -43,6 +45,12 @@ const CampaignTable = () => {
         });
         setOpen(false);
     };
+
+    const TableHeadComponent = ({ name, displayName }: { name: string; displayName: string }) => {
+        return <TableHead onClick={() => {if(sortBy === name) toggleSortOrder(); else setSortBy(name); }} className="cursor-pointer">
+            <div className="flex flex-row items-center gap-2">{displayName} <span className="text-xs text-gray-500">{sortBy === name ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
+        </TableHead>
+    }
     return (
         <div className="flex flex-col gap-4">
 
@@ -54,34 +62,13 @@ const CampaignTable = () => {
             <Table>
                 <TableHeader>   
                     <TableRow>
-                        <TableHead onClick={() => {if(sortBy === "name") toggleSortOrder(); else setSortBy("name"); }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">Name <span className="text-xs text-gray-500">{sortBy === "name" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
-                        <TableHead onClick={() => {if(sortBy === 'startDate') toggleSortOrder(); else setSortBy("startDate");    }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">Start Date <span className="text-xs text-gray-500">{sortBy === "startDate" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
-                        <TableHead onClick={() => {if(sortBy === 'endDate') toggleSortOrder(); else setSortBy("endDate"); }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">End Date <span className="text-xs text-gray-500">{sortBy === "endDate" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
-                        <TableHead onClick={() => {if(sortBy === 'clicks') toggleSortOrder(); else setSortBy("clicks"); }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">Clicks <span className="text-xs text-gray-500">{sortBy === "clicks" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
-                        <TableHead onClick={() => {if(sortBy === 'cost') toggleSortOrder(); else setSortBy("cost"); }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">Cost <span className="text-xs text-gray-500">{sortBy === "cost" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
-                        <TableHead onClick={() => {if(sortBy === 'revenue') toggleSortOrder(); else setSortBy("revenue"); }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">Revenue <span className="text-xs text-gray-500">{sortBy === "revenue" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
-                        <TableHead onClick={() => {if(sortBy === 'profit') toggleSortOrder(); else setSortBy("profit"); }} className="cursor-pointer">
-                            <div className="flex flex-row items-center gap-2">Profit <span className="text-xs text-gray-500">{sortBy === "profit" ? (sortOrder === "asc" ? <ArrowUp size={16} /> : <ArrowDown size={16} />) : null}</span></div>
-
-                        </TableHead>
+                        <TableHeadComponent name="name" displayName="Name" />
+                        <TableHeadComponent name="startDate" displayName="Start Date" />
+                        <TableHeadComponent name="endDate" displayName="End Date" />
+                        <TableHeadComponent name="clicks" displayName="Clicks" />
+                        <TableHeadComponent name="cost" displayName="Cost" />
+                        <TableHeadComponent name="revenue" displayName="Revenue" />
+                        <TableHeadComponent name="profit" displayName="Profit" />
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -114,8 +101,14 @@ const CampaignTable = () => {
                 </TableBody>
                 <TableFooter>
         <TableRow>
-          <TableCell colSpan={5}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
+                            <TableCell colSpan={3} className="font-bold">Totals</TableCell>
+                  <TableCell className="font-bold" >{campaigns.reduce((acc, campaign) => acc + campaign.clicks, 0).toFixed(2)} </TableCell>
+                  <TableCell className="font-bold" >{campaigns.reduce((acc, campaign) => acc + campaign.cost, 0).toFixed(2)}</TableCell>
+          
+          <TableCell className="font-bold" >{(campaigns.reduce((acc, campaign) => acc + campaign.revenue, 0)).toFixed(2)}</TableCell>
+          <TableCell className="font-bold" >{(campaigns.reduce((acc, campaign) => acc + (campaign.revenue-campaign.cost), 0)).toFixed(2)}</TableCell>
+          <TableCell colSpan={1}></TableCell>
+        
         </TableRow>
       </TableFooter>
             </Table>
